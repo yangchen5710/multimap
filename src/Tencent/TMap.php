@@ -24,7 +24,7 @@ class TMap
         $this->key = $options['key'];
     }
 
-    public function drive($origin, $destination, $ops = [])
+    public function drive($origin, $destination, array $ops = [])
     {
         $url = $this->host . '/ws/direction/v1/driving/';
 
@@ -40,7 +40,6 @@ class TMap
         ])->getBody()->getContents();
 
         return json_decode($response, true);
-
     }
 
 }

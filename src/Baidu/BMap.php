@@ -24,7 +24,7 @@ class BMap
         $this->key = $options['key'];
     }
 
-    public function drive($origin, $destination, $ops = [])
+    public function drive($origin, $destination, array $ops = [])
     {
         $url = $this->host . '/direction/v2/driving';
 

@@ -24,7 +24,7 @@ class AMap
         $this->key = $options['key'];
     }
 
-    public function drive($origin, $destination, $ops = [])
+    public function drive($origin, $destination, array $ops = [])
     {
         $url = $this->host . '/v5/direction/driving';
 
@@ -42,7 +42,6 @@ class AMap
         ])->getBody()->getContents();
 
         return json_decode($response, true);
-
     }
 
 }

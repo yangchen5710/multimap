@@ -1,0 +1,23 @@
+{
+    "name": "ycstar\/multimap",
+    "description": "定制化地图服务",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ycstar",
+            "email": "547098838@qq.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ycstar\\Multimap\\Amap\\": "src/Amap",
+            "Ycstar\\Multimap\\Baidu\\": "src/Baidu",
+            "Ycstar\\Multimap\\Tencent\\": "src/Tencent"
+        }
+    },
+    "repositories": {
+    }
+}

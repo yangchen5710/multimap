@@ -28,10 +28,13 @@ class BMap
     {
         $url = $this->host . '/direction/v2/driving';
 
+        list($originLng, $originLat) = explode(',', $origin);
+        list($destLng, $destLat) = explode(',', $destination);
+
         $query = [
-            'origin' => $origin,
-            'destination' => $destination,
-            'ak' => $this->key,
+            'from' => $originLat.','.$originLng,
+            'to' =>  $destLat.','.$destLng,
+            'key' => $this->key,
         ];
 
         $client = new Client();

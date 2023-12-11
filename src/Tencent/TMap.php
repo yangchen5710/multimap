@@ -28,9 +28,12 @@ class TMap
     {
         $url = $this->host . '/ws/direction/v1/driving/';
 
+        list($originLng, $originLat) = explode(',', $origin);
+        list($destLng, $destLat) = explode(',', $destination);
+
         $query = [
-            'from' => $origin,
-            'to' => $destination,
+            'from' => $originLat.','.$originLng,
+            'to' =>  $destLat.','.$destLng,
             'key' => $this->key,
         ];
 

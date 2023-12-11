@@ -32,6 +32,7 @@ class AMap
         ];
 
         $client = new Client();
+
         $response = $client->get($url, [
             'query' => array_merge($query, $ops),
         ]);

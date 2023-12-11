@@ -3,10 +3,13 @@
 namespace Ycstar\Multimap\Amap;
 
 use GuzzleHttp\Client;
-use Ycstar\Multimap\Contracts\DataArray;
 
 class AMap
 {
+    protected $host;
+
+    protected $key;
+
     public function __construct(array $options)
     {
         if (empty($options['host'])) {
@@ -17,15 +20,16 @@ class AMap
             throw new InvalidArgumentException("Missing Config -- [key]");
         }
 
-        $this->config = new DataArray($options);
+        $this->host = $options['host'];
+        $this->key = $options['key'];
     }
 
     public function drive($origin, $destination, $ops = [])
     {
-        $url = $this->config->get('host') . '/v5/direction/driving';
+        $url = $this->host . '/v5/direction/driving';
 
         $query = [
-            'key' => $this->config->get('key'),
+            'key' => $this->key,
             'origin' => $origin,
             'destination' => $destination,
             'show_fields' => 'polyline, cost',

@@ -3,10 +3,13 @@
 namespace Ycstar\Multimap\Baidu;
 
 use GuzzleHttp\Client;
-use Ycstar\Multimap\Contracts\DataArray;
 
 class BMap
 {
+    protected $host;
+
+    protected $key;
+
     public function __construct()
     {
         if (empty($options['host'])) {
@@ -17,17 +20,18 @@ class BMap
             throw new InvalidArgumentException("Missing Config -- [key]");
         }
 
-        $this->config = new DataArray($options);
+        $this->host = $options['host'];
+        $this->key = $options['key'];
     }
 
     public function drive($origin, $destination, $ops = [])
     {
-        $url = $this->config->get('host') . '/direction/v2/driving';
+        $url = $this->host . '/direction/v2/driving';
 
         $query = [
             'origin' => $origin,
             'destination' => $destination,
-            'ak' => $this->config->get('key'),
+            'ak' => $this->key,
         ];
 
         $client = new Client();

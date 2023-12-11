@@ -3,10 +3,13 @@
 namespace Ycstar\Multimap\Tencent;
 
 use GuzzleHttp\Client;
-use Ycstar\Multimap\Contracts\DataArray;
 
 class TMap
 {
+    protected $host;
+
+    protected $key;
+
     public function __construct()
     {
         if (empty($options['host'])) {
@@ -17,17 +20,18 @@ class TMap
             throw new InvalidArgumentException("Missing Config -- [key]");
         }
 
-        $this->config = new DataArray($options);
+        $this->host = $options['host'];
+        $this->key = $options['key'];
     }
 
     public function drive($origin, $destination, $ops = [])
     {
-        $url = $this->config->get('host') . '/ws/direction/v1/driving/';
+        $url = $this->host . '/ws/direction/v1/driving/';
 
         $query = [
             'from' => $origin,
             'to' => $destination,
-            'key' => $this->config->get('key'),
+            'key' => $this->key,
         ];
 
         $client = new Client();

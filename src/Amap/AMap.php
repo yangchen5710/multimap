@@ -32,7 +32,7 @@ class AMap
             'key' => $this->key,
             'origin' => $origin,
             'destination' => $destination,
-            'show_fields' => 'polyline, cost',
+            'show_fields' => 'polyline,cost',
         ];
 
         $client = new Client();

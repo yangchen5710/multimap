@@ -10,7 +10,7 @@ class TMap
 
     protected $key;
 
-    public function __construct()
+    public function __construct(array $options)
     {
         if (empty($options['host'])) {
             throw new InvalidArgumentException("Missing Config -- [host]");

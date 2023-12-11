@@ -39,7 +39,7 @@ class AMap
 
         $response = $client->get($url, [
             'query' => array_merge($query, $ops),
-        ]);
+        ])->getBody()->getContents();
 
         return json_decode($response, true);
 

@@ -24,6 +24,26 @@ class BMap
         $this->key = $options['key'];
     }
 
+    public function regeo(string $location, array $ops = [])
+    {
+        $url = $this->host . '/reverse_geocoding/v3/';
+
+        list($lng, $lat) = explode(',', $location);
+
+        $query = [
+            'ak' => $this->key,
+            'location' => $lat.','.$lng,
+        ];
+
+        $client = new Client();
+
+        $response = $client->get($url, [
+            'query' => array_merge($query, $ops),
+        ])->getBody()->getContents();
+
+        return json_decode($response, true);
+    }
+
     public function drive($origin, $destination, array $ops = [])
     {
         $url = $this->host . '/direction/v2/driving';
@@ -32,9 +52,9 @@ class BMap
         list($destLng, $destLat) = explode(',', $destination);
 
         $query = [
-            'from' => $originLat.','.$originLng,
-            'to' =>  $destLat.','.$destLng,
-            'key' => $this->key,
+            'ak' => $this->key,
+            'origin' => $originLat.','.$originLng,
+            'destination' =>  $destLat.','.$destLng,
         ];
 
         $client = new Client();

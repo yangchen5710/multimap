@@ -24,6 +24,24 @@ class AMap
         $this->key = $options['key'];
     }
 
+    public function regeo(string $location, array $ops = [])
+    {
+        $url = $this->host . '/v3/geocode/regeo';
+
+        $query = [
+            'key' => $this->key,
+            'location' => $location,
+        ];
+
+        $client = new Client();
+
+        $response = $client->get($url, [
+            'query' => array_merge($query, $ops),
+        ])->getBody()->getContents();
+
+        return json_decode($response, true);
+    }
+
     public function drive($origin, $destination, array $ops = [])
     {
         $url = $this->host . '/v5/direction/driving';

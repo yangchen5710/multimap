@@ -3,6 +3,8 @@
 namespace Ycstar\Multimap\Tencent;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise\Utils;
+use Ycstar\Multimap\Exceptions\InvalidArgumentException;
 
 class TMap
 {
@@ -62,6 +64,35 @@ class TMap
         ])->getBody()->getContents();
 
         return json_decode($response, true);
+    }
+
+    public function driveMulti(array $array)
+    {
+        if (empty($array)) {
+            throw new InvalidArgumentException("multi request require a not empty array");
+        }
+        $url = $this->host . '/ws/direction/v1/driving/';
+        $client = new Client(['base_uri' => $url]);
+        $promises = [];
+        foreach ($array as $k => $v){
+            list($originLng, $originLat) = explode(',', $v['origin']);
+            list($destLng, $destLat) = explode(',', $v['destination']);
+            $query = [
+                'key' => $this->key,
+                'from' => $originLat.','.$originLng,
+                'to' => $destLat.','.$destLng,
+            ];
+            $promises[$k] = $client->getAsync('',[
+                'query' => array_merge($query, $v['ops']??[]),
+            ]);
+        }
+        $results = Utils::unwrap($promises);
+        $responses = [];
+        foreach ($results as $k => $result){
+            $response = $result->getBody()->getContents();
+            $responses[$k] = json_decode($response, true);
+        }
+        return $responses;
     }
 
 }

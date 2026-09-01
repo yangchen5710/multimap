@@ -26,6 +26,24 @@ class AMap
         $this->key = $options['key'];
     }
 
+    public function geo(string $address, array $ops = [])
+    {
+        $url = $this->host . '/v3/geocode/geo';
+
+        $query = [
+            'key' => $this->key,
+            'address' => $address,
+        ];
+
+        $client = new Client();
+
+        $response = $client->get($url, [
+            'query' => array_merge($query, $ops),
+        ])->getBody()->getContents();
+
+        return json_decode($response, true);
+    }
+
     public function regeo(string $location, array $ops = [])
     {
         $url = $this->host . '/v3/geocode/regeo';
